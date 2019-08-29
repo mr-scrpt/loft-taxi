@@ -1,4 +1,4 @@
-import reducer from './RoverPhotos'
+import reducer from './Map'
 import {
   changeSol,
   fetchPhotosRequest,
@@ -10,7 +10,7 @@ const randomAction = {
   type: `RANDOM_ACTION_${parseInt(Math.random() * 1000, 10)}`
 }
 
-describe('Reducer RoverPhotos', () => {
+describe('Reducer Map', () => {
   const state0 = reducer(undefined, randomAction)
   console.log(state0)
 
