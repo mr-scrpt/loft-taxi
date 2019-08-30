@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import { reduxForm, Field} from 'redux-form';
-
 import {compose} from 'recompose';
 import TextField from '@material-ui/core/TextField';
-
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -32,85 +30,64 @@ const styles = theme => ({
   }
 });
 
-class Login extends PureComponent {
-  state = {
-    inputValue: ''
-  };
-  handleChange = event => {
-    this.setState({ inputValue: event.target.value });
+const Login = (props) =>{
+  const { classes } = props;
+  const checkSendForm = event => {
+    event.preventDefault();
   };
 
-  handleKeyPress = event => {
-    const { inputValue } = this.state;
-    const { onEnter } = this.props;
-
+  const checkPressButtonForm = event =>{
     if (event.key === 'Enter') {
-      onEnter(inputValue);
+      console.log('ee');
     }
   };
-  render() {
-    const { classes } = this.props;
-    const { inputValue } = this.state;
 
-   /* const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
-      return (
-        <>
-          <input {...input} placeholder={placeholder} type={type} id={id} className={className}/>
-          {touched && error && <p style={{ color: "red" }}>{error}</p>}
-        </>
-      );
-    };
-*/
-
-    const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
-      return (
-        <>
-        <TextField
-          id="standard-uncontrolled"
-          label="Имя пользователя *"
-          defaultValue=""
-          className={className}
-          margin="normal"
-        />
-        <TextField
-          id="standard-uncontrolled"
-          label="Пароль *"
-          defaultValue=""
-          className={className}
-          margin="normal"
-        />
-        <Button color="primary"variant="outlined">
-          Войти
-        </Button>
-        </>
-      );
-    };
-
-
+  const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
     return (
-      <Paper className={classes.root}>
-        <Typography className={classes.paragraph} component="p">
-         Войти
-        </Typography>
+      <>
+        <TextField
+          label={placeholder}
+          defaultValue=""
+          className={className}
+          margin="normal"
+          id={id}
+          {...input}
+        />
+
+        {touched && error && <p style={{color: 'red'}}>{error}</p>}
+      </>
+    );
+  };
+
+  return(
+    <Paper className={classes.root}>
+      <Typography className={classes.paragraph} component="p">
+        Войти
+      </Typography>
+      <form onSubmit={checkSendForm} onKeyPress={checkPressButtonForm}>
         <Field
           component={customField}
-          placeholder='Логин'
+          placeholder='Логин *'
           type='text'
+          id='first-name'
           name='firstName'
           className='formField'
         />
-        {/*<TextField
-          value={inputValue}
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-          className={classes.input}
-          label="Nasa API Key"
-          margin="dense"
-        />*/}
-      </Paper>
-    );
-  }
-}
+        <Field
+          component={customField}
+          placeholder='Пароль *'
+          type='text'
+          id='last-name'
+          name='password'
+          className='formField'
+        />
+        <Button color="primary" variant="outlined" type='submit'>
+          Войти
+        </Button>
+      </form>
+    </Paper>
+  )
+};
 
 export default compose(
   withStyles(styles),
