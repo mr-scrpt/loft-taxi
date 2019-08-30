@@ -1,3 +1,3 @@
 import { createAction } from 'redux-actions';
 
-export const addKey = createAction('AUTH/ADD_KEY')
+export const isLogged = createAction('AUTH/IS_LOGGED');

@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
-import { reduxForm, Field} from 'redux-form';
+import { reduxForm, Field, isValid} from 'redux-form';
 import {compose} from 'recompose';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import {connect} from "react-redux";
 
 
 
@@ -30,33 +31,68 @@ const styles = theme => ({
   }
 });
 
+const myValidator = values =>{
+  const errors = {};
+
+  if(!values.login){
+    errors.login = 'Поле логина пустое'
+  }
+  if(values.login && values.login !== 'test@test.com'){
+    errors.login = 'Логин неправильный'
+  }
+ if(values.login && !values.login.split('').includes('@')){
+    errors.login = 'Логин должен быть почтой'
+  }
+
+  if(!values.password){
+    errors.password = 'Поле пароля пустое'
+  }
+
+  if(values.password && values.password !== '123123'){
+    errors.password = 'Пароль не верен'
+  }
+
+  return errors;
+};
+
+const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
+  return (
+    <>
+      <TextField
+        label={placeholder}
+        defaultValue=""
+        className={className}
+        margin="normal"
+        id={id}
+        type={type}
+        {...input}
+      />
+
+      {touched && error && <p style={{color: 'red'}}>{error}</p>}
+    </>
+  );
+};
+
 const Login = (props) =>{
-  const { classes } = props;
+
+  const { classes, valid, onSends } = props;
+
+  const formSends = (callback)=>{
+    if(valid){
+      callback()
+    }
+  };
+
   const checkSendForm = event => {
+
     event.preventDefault();
+    formSends(onSends);
   };
 
   const checkPressButtonForm = event =>{
     if (event.key === 'Enter') {
-      console.log('ee');
+      formSends(onSends);
     }
-  };
-
-  const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
-    return (
-      <>
-        <TextField
-          label={placeholder}
-          defaultValue=""
-          className={className}
-          margin="normal"
-          id={id}
-          {...input}
-        />
-
-        {touched && error && <p style={{color: 'red'}}>{error}</p>}
-      </>
-    );
   };
 
   return(
@@ -70,13 +106,13 @@ const Login = (props) =>{
           placeholder='Логин *'
           type='text'
           id='first-name'
-          name='firstName'
+          name='login'
           className='formField'
         />
         <Field
           component={customField}
           placeholder='Пароль *'
-          type='text'
+          type='password'
           id='last-name'
           name='password'
           className='formField'
@@ -90,8 +126,11 @@ const Login = (props) =>{
 };
 
 export default compose(
+  connect(
+    state => ({valid: isValid('Login')(state)})
+  ),
   withStyles(styles),
-  reduxForm({form: 'Login'})
+  reduxForm({form: 'Login', validate: myValidator})
 )(Login);
 
 //export default withStyles(styles)(reduxForm({form: 'Login'})(Login));

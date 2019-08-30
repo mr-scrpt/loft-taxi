@@ -1,20 +1,20 @@
 // Реализуйте редьюсер
 import { combineReducers } from 'redux';
 import {handleActions} from 'redux-actions';
-import {addKey} from './actions';
+import {isLogged} from './actions';
 import {createSelector} from 'reselect';
 
-const apiKey = handleActions({
-  [addKey]: (_state, action) => action.payload
-}, null);
+const Logged = handleActions({
+  [isLogged]: (_state, action) => action.payload
+}, false);
 
 
 export default combineReducers({
-  apiKey
+  Logged
 });
 //Селекторы
 
 export const getIsAuthorized = createSelector(
-  state => state.auth.apiKey,
+  state => state.auth.Logged,
   apiKey=>apiKey
 );

@@ -4,29 +4,38 @@ import Login from '../Login';
 import Map from '../Map';
 import styles from './App.module.css';
 import { connect } from 'react-redux';
-import { getIsAuthorized, addKey } from '../../modules/Auth';
+import { getIsAuthorized, isLogged } from '../../modules/Auth';
 import {Switch, Route, NavLink, Redirect, BrowserRouter} from 'react-router-dom';
 import Header from '../Header';
 import {PageLogin} from "../PageLogin";
 import {PageMap} from '../PageMap';
+import {getFormError} from "redux-form";
 
 
 
 class App extends PureComponent {
-  handleEnterApiKey = apiKey => {
-    const { addKey } = this.props;
+  
+  handleLogin = apiKey => {
+    // const { addKey } = this.props;
+    // addKey(apiKey);
+    console.log('test here');
+  };
 
-    addKey(apiKey);
+  logged = ()=>{
+    const {isLogged} = this.props;
+    isLogged(true);
+    console.log('logged');
+
   };
 
 
-
   render() {
-    const { isAuthorized } = this.props;
+    const { isAuthorized, submitErrors } = this.props;
+    console.log(submitErrors);
     return(
       <BrowserRouter>
         <Header />
-        {isAuthorized ? <PageMap /> : <PageLogin />}
+        {isAuthorized ? <PageMap /> : <PageLogin onSends={this.logged}/>}
       </BrowserRouter>
     )
   }
@@ -50,6 +59,10 @@ class App extends PureComponent {
 }
 
 export default connect(
-  state => ({ isAuthorized: getIsAuthorized(state) }),
-  { addKey }
+  state => ({
+    isAuthorized: getIsAuthorized(state),
+    submitErrors: getFormError('Login')(state),
+  }),
+
+  { isLogged }
 )(App);
