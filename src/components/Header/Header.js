@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import st from './Header.module.css';
 import cx from 'classnames';
-import {NavTop} from '../NavTop';
+import NavTop from '../NavTop';
 import {Logo} from '../Logo';
 
 export default class Header extends Component{

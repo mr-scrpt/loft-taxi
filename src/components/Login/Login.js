@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {connect} from "react-redux";
+import cx from 'classnames';
+import st from './Login.module.css';
 
 
 
@@ -96,11 +98,11 @@ const Login = (props) =>{
   };
 
   return(
-    <Paper className={classes.root}>
+    <Paper className={cx(classes.root)}>
       <Typography className={classes.paragraph} component="p">
         Войти
       </Typography>
-      <form onSubmit={checkSendForm} onKeyPress={checkPressButtonForm}>
+      <form onSubmit={checkSendForm} onKeyPress={checkPressButtonForm} className={cx('form', st.login__form)}>
         <Field
           component={customField}
           placeholder='Логин *'
