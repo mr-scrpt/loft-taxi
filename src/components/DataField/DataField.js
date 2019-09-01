@@ -6,19 +6,48 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import {compose} from "recompose";
+import {withStyles} from "@material-ui/core";
+import cx from "classnames";
 
-export default function MaterialUIPickers() {
-  // The first commit of Material-UI
+const styles = theme => ({
+  /*root: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    width: 800,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  paragraph: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: '28px'
+  },*/
+  textField:{
+    width: '100%'
+  }
+});
+
+const DataField = (props) => {
+
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
   function handleDateChange(date) {
     setSelectedDate(date);
   }
 
+
+  const { classes, name } = props;
+
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
+    <MuiPickersUtilsProvider utils={DateFnsUtils} name={name}>
+      <Grid container justify="space-around" >
         <KeyboardDatePicker
+          name={name}
+          className={cx(classes.textField)}
           disableToolbar
           variant="inline"
           format="MM/dd/yyyy"
@@ -34,4 +63,8 @@ export default function MaterialUIPickers() {
       </Grid>
     </MuiPickersUtilsProvider>
   );
-}
+};
+
+export default compose(
+  withStyles(styles)
+)(DataField);

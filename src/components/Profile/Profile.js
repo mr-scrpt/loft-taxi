@@ -56,7 +56,7 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
 
 export const Profile = (props) =>{
   const { classes } = props;
-  console.log(props);
+
   return(
     <Paper className={cx(classes.root)}>
       <Typography className={classes.paragraph} component="p">
@@ -64,34 +64,35 @@ export const Profile = (props) =>{
       </Typography>
       <form className={cx('form', st.profile__form)}>
         <div className={cx(stForm.form__inner)}>
-
-
           <div className={cx(stForm.form__col)}>
             <Field
               component={customField}
               placeholder='Имя владельца *'
               type='text'
-              id='first-name'
-              name='login'
+              id='fullName'
+              name='fullName'
               className={cx('formField', classes.textField)}
             />
-            <DataField/>
+
+            <DataField name='cartData'/>
+
+
           </div>
           <div className={cx(stForm.form__col)}>
             <Field
               component={customField}
               placeholder='Номер карты *'
               type='text'
-              id='first-name'
-              name='login'
+              id='cartNumber'
+              name='cartNumber'
               className={cx('formField', classes.textField)}
             />
             <Field
               component={customField}
               placeholder='CVV'
               type='text'
-              id='first-name'
-              name='login'
+              id='cvv'
+              name='cvv'
               className={cx('formField', classes.textField)}
             />
           </div>
