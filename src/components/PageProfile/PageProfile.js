@@ -1,9 +1,14 @@
 import React from 'react';
-import {Profile} from "../Profile";
+import Profile from "../Profile";
+import st from "./PageProfile.module.css";
 
 export const PageProfile = () =>{
 
   return(
-    <Profile />
+    <div className={st.pageProfile}>
+      <div className={st.pageProfile__inner}>
+        <Profile />
+      </div>
+    </div>
   )
 };

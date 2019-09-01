@@ -135,4 +135,4 @@ export default compose(
   reduxForm({form: 'Login', validate: myValidator})
 )(Login);
 
-//export default withStyles(styles)(reduxForm({form: 'Login'})(Login));
+//export default withStyles(styles)(reduxForm({Form: 'Login'})(Login));

@@ -6,7 +6,7 @@ import {createSelector} from 'reselect';
 
 const Logged = handleActions({
   [isLogged]: (_state, action) => action.payload
-}, false);
+}, true);
 
 
 export default combineReducers({

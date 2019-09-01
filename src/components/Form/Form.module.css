@@ -1,0 +1,16 @@
+.form__inner{
+  display: flex;
+  flex-wrap: wrap;
+}
+.form__col{
+  width: calc(50% - 30px - 48px);
+  margin: 30px;
+}
+.form__row{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.form__button {
+  width: 180px;
+}
