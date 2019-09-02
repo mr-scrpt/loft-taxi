@@ -14,7 +14,7 @@ const NavTop = (props)=> {
   const LoginButton = ({myClass, isAuthorized, isLogged}) => (
     isAuthorized ?
       (
-        <div onClick={()=>isLogged}>
+        <div onClick={()=>isLogged()}>
           <NavLink to={`login`} className={cx(st.navTop__link)}>
             Выйти
           </NavLink>

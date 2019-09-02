@@ -1,18 +1,12 @@
 import React, {PureComponent} from 'react';
-import Grid from '@material-ui/core/Grid';
-
-
-import styles from './App.module.css';
 import {connect} from 'react-redux';
 import {getIsAuthorized, fetchLoggedRequest} from '../../modules/Auth';
-import {Switch, Route, NavLink, Redirect, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
-
 import Header from '../Header';
 import {PageLogin} from "../PageLogin";
 import {PageMap} from '../PageMap';
 import {PageProfile} from '../PageProfile';
-
 import {getFormError} from "redux-form";
 
 
