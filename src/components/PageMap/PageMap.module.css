@@ -1,0 +1,9 @@
+.pageMap{
+  width: 100%;
+  height: 100%;
+}
+.pageMap__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}

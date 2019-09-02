@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import mapboxgl from 'mapbox-gl';
+import ModalAddress from '../ModalAddress';
 
 const styles = {
   card: {
@@ -26,9 +27,12 @@ class Map extends PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <div ref={el => this.mapContainer = el} style={{width: '100%', height: '100%'}}>
+      <>
+        <div ref={el => this.mapContainer = el} style={{width: '100%', height: '100%'}}>
 
-      </div>
+        </div>
+        <ModalAddress/>
+      </>
     );
   }
 }

@@ -108,9 +108,9 @@ export const Profile = (props) =>{
   )
 };
 export default compose(
-  connect(
+  /*connect(
     state => ({valid: isValid('Profile')(state)})
-  ),
+  ),*/
   reduxForm({form: 'Profile'}),
   withStyles(styles)
 )(Profile);
