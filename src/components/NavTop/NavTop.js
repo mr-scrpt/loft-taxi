@@ -4,19 +4,17 @@ import st from "./NavTop.module.css";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
-import {getIsAuthorized, isLogged} from '../../modules/Auth';
+import {getIsAuthorized, fetchLoggedOut} from '../../modules/Auth';
 
 import {connect} from "react-redux";
 
 const NavTop = (props)=> {
-  const {className: parentClass, isAuthorized, isLogged} = props;
- /* const handdler = () =>{
-    console.log('test here');
-  };*/
+  const {className: parentClass, isAuthorized, fetchLoggedOut} = props;
+
   const LoginButton = ({myClass, isAuthorized, isLogged}) => (
     isAuthorized ?
       (
-        <div onClick={()=>isLogged(false)}>
+        <div onClick={()=>isLogged}>
           <NavLink to={`login`} className={cx(st.navTop__link)}>
             Выйти
           </NavLink>
@@ -48,7 +46,7 @@ const NavTop = (props)=> {
         </Button>
 
         <Button variant="contained">
-          <LoginButton isAuthorized={isAuthorized} isLogged={isLogged}/>
+          <LoginButton isAuthorized={isAuthorized} isLogged={fetchLoggedOut}/>
         </Button>
 
        {/*<LoginButton myClass={cx(st.navTop__link)}/>*/}
@@ -60,5 +58,5 @@ const NavTop = (props)=> {
 };
 export default connect(
   state => ({isAuthorized: getIsAuthorized(state)}),
-  {isLogged}
+  {fetchLoggedOut}
 )(NavTop)

@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 
 import styles from './App.module.css';
 import {connect} from 'react-redux';
-import {getIsAuthorized, isLogged} from '../../modules/Auth';
+import {getIsAuthorized, fetchLoggedRequest} from '../../modules/Auth';
 import {Switch, Route, NavLink, Redirect, BrowserRouter} from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 
@@ -19,8 +19,8 @@ import {getFormError} from "redux-form";
 class App extends PureComponent {
 
   logged = () => {
-    const {isLogged} = this.props;
-    isLogged(true);
+    const {fetchLoggedRequest} = this.props;
+    fetchLoggedRequest();
   };
 
   render() {
@@ -57,5 +57,5 @@ export default connect(
     isAuthorized: getIsAuthorized(state),
     submitErrors: getFormError('Login')(state),
   }),
-  {isLogged}
+  {fetchLoggedRequest}
 )(App);
