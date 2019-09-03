@@ -48,7 +48,12 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
   );
 };
 const ModalAddress = ( props )=>{
-
+  const testOptions = [
+    {name: '', value: ''},
+    {name: 'Адрес 1', value: 'address1'},
+    {name: 'Адрес 2', value: 'address2'},
+    {name: 'Адрес 3', value: 'address3'},
+  ];
   const { classes } = props;
     return(
       <Paper className={cx(classes.root, st.modal)}>
@@ -56,18 +61,21 @@ const ModalAddress = ( props )=>{
           Вызов такси
         </Typography>
         <form className={cx(st.modal__form)}>
-          {/*<Field
-            component={SelectField}
-            name='addressFrom'
-            label='Выберите адрес отправления'
-          />*/}
 
-          <Field name='addressFrom' component={SelectField}>
-            <option></option>
-            <option value="ff0000">Red</option>
-            <option value="00ff00">Green</option>
-            <option value="0000ff">Blue</option>
-          </Field>
+
+          <Field
+            name='addressFrom'
+            component={SelectField}
+            options={testOptions}
+            label='Выберите адрес отправления'
+          />
+          <Field
+            name='addressTo'
+            component={SelectField}
+            options={testOptions}
+            label='Выберите адрес прибытия'
+          />
+
 
           <Button color="primary" variant="outlined" type='submit'>
             Вызвать такси
