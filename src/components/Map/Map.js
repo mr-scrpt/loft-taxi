@@ -14,10 +14,13 @@ const styles = {
 };
 
 class Map extends PureComponent {
+
+  mapRef = React.createRef();
+
   componentDidMount() {
     mapboxgl.accessToken = 'pk.eyJ1IjoidGlweWxqYSIsImEiOiJjazAyOHBtM3IyanE0M2J1dDhtNDZsNHpwIn0.3_-aEyOwipYPz0t8BXImsA';
     this.map = new mapboxgl.Map({
-      container: this.mapContainer,
+      container: this.mapRef.current,
       style: 'mapbox://styles/mapbox/streets-v9',
       center: [30.264, 59.894], // starting position [lng, lat]
       zoom: 9 // starting zoom
@@ -26,10 +29,10 @@ class Map extends PureComponent {
 
   render() {
     const { classes } = this.props;
+
     return (
       <>
-        <div ref={el => this.mapContainer = el} style={{width: '100%', height: '100%'}}>
-
+        <div ref={this.mapRef} style={{width: '100%', height: '100%'}}>
         </div>
         <ModalAddress/>
       </>

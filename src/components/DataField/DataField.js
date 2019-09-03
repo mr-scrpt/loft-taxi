@@ -31,7 +31,7 @@ const styles = theme => ({
   }
 });
 
-const DataField = (props) => {
+const DataField = ({classes, name, input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
 
   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
@@ -40,7 +40,7 @@ const DataField = (props) => {
   }
 
 
-  const { classes, name } = props;
+  //const { classes, name, input, type, placeholder, id, className, meta: { touched, error },...rest} } = props;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} name={name}>
@@ -53,7 +53,12 @@ const DataField = (props) => {
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label="Date picker inline"
+          //label="Date picker inline"
+          label={placeholder}
+          defaultValue=""
+          id={id}
+          type={type}
+          {...input}
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{

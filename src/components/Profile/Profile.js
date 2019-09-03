@@ -74,7 +74,14 @@ export const Profile = (props) =>{
               className={cx('formField', classes.textField)}
             />
 
-            <DataField name='cartData'/>
+            <Field
+              component={DataField}
+              name='cartData'
+              placeholder='Срок действия карты *'
+              id='cartData'
+              className={cx('formField', classes.textField)}
+            />
+
 
 
           </div>
@@ -98,7 +105,7 @@ export const Profile = (props) =>{
           </div>
           <div className={cx(stForm.form__row)}>
             <Button color="primary" variant="outlined" type='submit' className={cx(stForm.form__button)}>
-              Войти
+              Сохранить
             </Button>
           </div>
         </div>

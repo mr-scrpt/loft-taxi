@@ -8,7 +8,7 @@ const Logged = handleActions({
   [fetchLoggedRequest]: () => false,
   [fetchLoggedOut]: () => false,
   [fetchLoggedSuccess]: (_state, action) => action.payload,
-}, false);
+}, true);
 
 
 export default combineReducers({

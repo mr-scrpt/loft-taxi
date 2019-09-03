@@ -3,15 +3,12 @@ import Paper from "@material-ui/core/Paper";
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 import st from "./ModalAddress.module.css";
-import {reduxForm} from "redux-form";
+import {Field,reduxForm} from "redux-form";
 import Button from "@material-ui/core/Button";
 import {compose} from "recompose";
 import {withStyles} from "@material-ui/core";
-
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
+import SelectField from '../SelectField';
+import TextField from "@material-ui/core/TextField";
 
 const styles = theme => ({
   root: {
@@ -33,7 +30,23 @@ const styles = theme => ({
     width: '100%'
   }
 });
+const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
+  return (
+    <>
+      <TextField
+        label={placeholder}
+        defaultValue=""
+        className={className}
+        margin="normal"
+        id={id}
+        type={type}
+        {...input}
+      />
 
+      {touched && error && <p style={{color: 'red'}}>{error}</p>}
+    </>
+  );
+};
 const ModalAddress = ( props )=>{
 
   const { classes } = props;
@@ -43,21 +56,19 @@ const ModalAddress = ( props )=>{
           Вызов такси
         </Typography>
         <form className={cx(st.modal__form)}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="age-simple" name='addressFrom'>Выберите адрес отправления</InputLabel>
-            <Select
-              //value={values.age}
-              //onChange={handleChange}
-              inputProps={{
-                name: 'age',
-                id: 'age-simple',
-              }}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
+          {/*<Field
+            component={SelectField}
+            name='addressFrom'
+            label='Выберите адрес отправления'
+          />*/}
+
+          <Field name='addressFrom' component={SelectField}>
+            <option></option>
+            <option value="ff0000">Red</option>
+            <option value="00ff00">Green</option>
+            <option value="0000ff">Blue</option>
+          </Field>
+
           <Button color="primary" variant="outlined" type='submit'>
             Вызвать такси
           </Button>
