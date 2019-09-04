@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import { fork } from 'redux-saga/effects';
-import auth, {sagas} from './Auth';
-
+import auth, {sagasAuth} from './Auth';
+import maps, {sagasMap} from './Map'
 import {reducer as formReducer} from 'redux-form';
 
 
-export default combineReducers({ auth, form: formReducer });
+export default combineReducers({ auth, maps, form: formReducer });
 
 export function* rootSaga() {
-  yield fork(sagas);
+  yield fork(sagasAuth);
+  yield fork(sagasMap);
 }

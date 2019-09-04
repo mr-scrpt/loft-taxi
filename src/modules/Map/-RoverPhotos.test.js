@@ -1,4 +1,4 @@
-import reducer from './Map'
+import reducer from './maps'
 import {
   changeSol,
   fetchPhotosRequest,

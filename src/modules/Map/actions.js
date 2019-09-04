@@ -1,13 +1,16 @@
 import { createAction } from 'redux-actions';
 
-export const changeSol = createAction('ROVER_PHOTOS/CHANGE_SOL');
+export const fetchAddressRequest = createAction(
+  'TAXI/FETCH_ADDRESS_REQUEST'
+);
+export const fetchAddressSuccess = createAction(
+  'TAXI/FETCH_ADDRESS_SUCCESS'
+);
 
-export const fetchPhotosRequest = createAction(
-  'ROVER_PHOTOS/FETCH_PHOTOS_REQUEST'
+
+export const fetchCoordsRequest = createAction(
+  'TAXI/FETCH_COORDS_REQUEST'
 );
-export const fetchPhotosSuccess = createAction(
-  'ROVER_PHOTOS/FETCH_PHOTOS_SUCCESS'
-);
-export const fetchPhotosFailure = createAction(
-  'ROVER_PHOTOS/FETCH_PHOTOS_FAILURE'
+export const fetchCoordsSuccess = createAction(
+  'TAXI/FETCH_COORDS_SUCCESS'
 );

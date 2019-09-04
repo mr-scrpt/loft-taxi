@@ -1,10 +1,16 @@
-export const getPhotos = (apiKey, rover, solNum) =>
-  fetch(
-    `https://api.nasa.gov/mars-photos/api/v1/rovers/` +
-      `${rover}/photos?` +
-      `sol=${solNum}&` +
-      `api_key=${apiKey}`
+const BASE_URL = `https://loft-taxi.glitch.me`;
+
+export const getAddressList = () =>
+  fetch(`${BASE_URL}/addressList`
   ).then(
-    response =>
-      response.status !== 200 ? Promise.reject(response) : response.json()
+    res =>
+      res.status !== 200 ? Promise.reject(res) : res.json()
+  );
+
+export const getCoordsPoint = (from, to) =>
+  fetch(
+    `https://loft-taxi.glitch.me/route?address1=${from}&address2=${to}`
+  ).then(
+    res =>
+      res.status !== 200 ? Promise.reject(res) : res.json()
   );

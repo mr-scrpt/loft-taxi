@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
-
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 const renderFromHelper = ({ touched, error }) => {
@@ -19,25 +19,25 @@ const renderFromHelper = ({ touched, error }) => {
   }
 };
 
-const renderSelectField = ({ input, label, options, meta: {touched, error},...custom}) => (
+const renderSelectField = ({input, label, options, inputName, meta: {touched, error},...custom}) => (
   <FormControl error={touched && error}>
     <InputLabel htmlFor="age-native-simple">{label}</InputLabel>
     <Select
-      native
       {...input}
       {...custom}
       inputProps={{
-        name: 'age',
+        name: inputName,
         id: 'age-native-simple'
       }}
     >
+
       {options && options.map(item=>(
-        <option value={item.value}>{item.name}</option>
+        <MenuItem value={item} key={item}>{item}</MenuItem>
       ))}
 
     </Select>
     {renderFromHelper({touched, error})}
   </FormControl>
-)
+);
 
 export default renderSelectField;

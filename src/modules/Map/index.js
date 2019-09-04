@@ -1,4 +1,4 @@
-export { default } from './Map';
-export * from './Map';
+export { default } from './maps';
+export * from './maps';
 export * from './actions';
-export { default as sagas } from './sagas';
+export { default as sagasMap } from './sagas';
