@@ -14,3 +14,13 @@ export const fetchCoordsRequest = createAction(
 export const fetchCoordsSuccess = createAction(
   'TAXI/FETCH_COORDS_SUCCESS'
 );
+
+
+export const cancelPathRequest = createAction(
+  'TAXI/CANCEL_PATH_REQUEST'
+);
+
+/*
+export const cancelPathSuccess = createAction(
+  'TAXI/CANCEL_PATH_SUCCESS'
+);*/

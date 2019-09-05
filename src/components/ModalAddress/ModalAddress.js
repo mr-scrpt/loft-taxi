@@ -10,7 +10,14 @@ import {withStyles} from "@material-ui/core";
 import SelectField from '../SelectField';
 import TextField from "@material-ui/core/TextField";
 
-import {fetchAddressRequest,  fetchCoordsRequest, getAddressList} from '../../modules/Map';
+import {
+  cancelPathRequest,
+  fetchAddressRequest,
+  fetchCoordsRequest,
+  getAddressList,
+  getOnMyWay,
+  cancelcancelPathRequest
+} from '../../modules/Map';
 import {connect} from "react-redux";
 
 
@@ -51,39 +58,56 @@ const ModalAddress = ( props )=>{
 
   };
 
-  const { classes, addressList } = props;
+  const { classes, addressList, getOnMyWay, cancelPathRequest } = props;
+  console.log(getOnMyWay);
+  let content = null;
+  if(getOnMyWay === true){
+    content = (
+      <>
+      <p>Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут</p>
+      <Button color="primary" variant="outlined" type='submit' onClick={()=> cancelPathRequest()}>
+        Отменить заказ
+      </Button>
+        </>
+    )
+  }else {
+    content = (
+      <>
+      <form className={cx(st.modal__form)} onSubmit={getCoords}>
+      {addressList && addressList.addresses && (
+        <>
+          <Field
+            name='addressFrom'
+            inputName='addressFrom'
+            component={SelectField}
+            options={addressList.addresses}
+            label='Выберите адрес отправления'
+          />
+          <Field
+            name='addressTo'
+            inputName='addressTo'
+            component={SelectField}
+            options={addressList.addresses}
+            label='Выберите адрес прибытия'
+          />
+        </>
+      )}
+
+
+    <Button color="primary" variant="outlined" type='submit'>
+      Вызвать такси
+    </Button>
+    </form>
+    </>
+    )
+  }
 
     return(
       <Paper className={cx(classes.root, st.modal)}>
         <Typography className={classes.paragraph} component="p">
           Вызов такси
         </Typography>
-        <form className={cx(st.modal__form)} onSubmit={getCoords}>
-
-          {addressList && addressList.addresses && (
-            <>
-            <Field
-              name='addressFrom'
-              inputName='addressFrom'
-              component={SelectField}
-              options={addressList.addresses}
-              label='Выберите адрес отправления'
-            />
-            <Field
-              name='addressTo'
-              inputName='addressTo'
-              component={SelectField}
-              options={addressList.addresses}
-              label='Выберите адрес прибытия'
-            />
-            </>
-          )}
-
-
-          <Button color="primary" variant="outlined" type='submit'>
-            Вызвать такси
-          </Button>
-        </form>
+        {content}
       </Paper>
     )
 
@@ -91,8 +115,8 @@ const ModalAddress = ( props )=>{
 
 export default compose(
   connect(
-    state=> ({ addressList: getAddressList(state) }),
-    {fetchAddressRequest, fetchCoordsRequest}
+    state=> ({ addressList: getAddressList(state), getOnMyWay: getOnMyWay(state) }),
+    {fetchAddressRequest, fetchCoordsRequest, cancelPathRequest}
   ),
   withStyles(styles),
   reduxForm({form: 'ModalAddress'})
