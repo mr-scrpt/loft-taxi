@@ -11,6 +11,9 @@ import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import DataField from "../DataField";
+import {validator} from './validator';
+
+
 
 const styles = theme => ({
   root: {
@@ -48,14 +51,13 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
         type={type}
         {...input}
       />
-
+      {error}
       {touched && error && <p style={{color: 'red'}}>{error}</p>}
     </>
   );
 };
-
 export const Profile = (props) =>{
-  const { classes } = props;
+  const { classes, valid, onSends } = props;
 
   return(
     <Paper className={cx(classes.root)}>
@@ -81,8 +83,6 @@ export const Profile = (props) =>{
               id='cartData'
               className={cx('formField', classes.textField)}
             />
-
-
 
           </div>
           <div className={cx(stForm.form__col)}>
@@ -115,9 +115,9 @@ export const Profile = (props) =>{
   )
 };
 export default compose(
-  /*connect(
+  connect(
     state => ({valid: isValid('Profile')(state)})
-  ),*/
-  reduxForm({form: 'Profile'}),
+  ),
+  reduxForm({form: 'Profile', validate: validator}),
   withStyles(styles)
 )(Profile);

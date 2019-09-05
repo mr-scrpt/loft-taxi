@@ -69,7 +69,7 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
         type={type}
         {...input}
       />
-
+      {error}
       {touched && error && <p style={{color: 'red'}}>{error}</p>}
     </>
   );
