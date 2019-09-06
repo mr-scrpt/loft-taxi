@@ -72,16 +72,25 @@ export const Profile = (props) =>{
     }
   };
 
+  const handlerCart = (e)=>{
+    const target = e.target;
+    if (target.name === "cartNumber"){
+      let value = target.value;
+      value = value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ')
+    }
+  };
+
   if (dataStatus){
     return (<Redirect to='/map'/>);
   }
+
 
   return(
     <Paper className={cx(classes.root)}>
       <Typography className={classes.paragraph} component="p">
         Профиль
       </Typography>
-      <form className={cx('form', st.profile__form)} onSubmit={checkSendForm}>
+      <form className={cx('form', st.profile__form)} onSubmit={checkSendForm} onChange={handlerCart}>
         <div className={cx(stForm.form__inner)}>
           <div className={cx(stForm.form__col)}>
             <Field
