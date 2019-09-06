@@ -12,6 +12,8 @@ import {withStyles} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import DataField from "../DataField";
 import {validator} from './validator';
+import {profileDataSet, getProfileData} from '../../modules/Profile';
+import {Redirect} from 'react-router-dom';
 
 
 
@@ -37,7 +39,8 @@ const styles = theme => ({
 });
 
 
-const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
+const customField = ({ ref, input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
+
   return (
     <>
       <TextField
@@ -47,6 +50,7 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
         margin="normal"
         id={id}
         type={type}
+
         {...input}
       />
 
@@ -56,18 +60,28 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
 };
 export const Profile = (props) =>{
 
-  useEffect(()=>{
-    
-  }, []);
 
-  const { classes, valid, onSends } = props;
-  console.log(valid);
+
+  const { classes, valid, onSends, profileDataSet, dataStatus } = props;
+
+
+  const checkSendForm = event => {
+    event.preventDefault();
+    if(valid){
+      profileDataSet(true)
+    }
+  };
+
+  if (dataStatus){
+    return (<Redirect to='/map'/>);
+  }
+
   return(
     <Paper className={cx(classes.root)}>
       <Typography className={classes.paragraph} component="p">
         Профиль
       </Typography>
-      <form className={cx('form', st.profile__form)} >
+      <form className={cx('form', st.profile__form)} onSubmit={checkSendForm}>
         <div className={cx(stForm.form__inner)}>
           <div className={cx(stForm.form__col)}>
             <Field
@@ -96,6 +110,7 @@ export const Profile = (props) =>{
               id='cartNumber'
               name='cartNumber'
               className={cx('formField', classes.textField)}
+
             />
             <Field
               component={customField}
@@ -119,7 +134,11 @@ export const Profile = (props) =>{
 };
 export default compose(
   connect(
-    state => ({valid: isValid('Profile')(state)})
+    state => ({
+      valid: isValid('Profile')(state),
+      dataStatus: getProfileData(state)
+    }),
+    {profileDataSet}
   ),
   reduxForm({form: 'Profile', validate: validator}),
   withStyles(styles)
