@@ -12,7 +12,7 @@ const randomAction = {
 
 describe('Reducer Map', () => {
   const state0 = reducer(undefined, randomAction)
-  console.log(state0)
+
 
   describe('action changeSol', () => {
     it('Меняет номер сола в sol.current', () => {

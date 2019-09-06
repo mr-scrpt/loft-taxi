@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 import st from "./Profile.module.css";
@@ -39,7 +39,7 @@ const styles = theme => ({
 });
 
 
-const customField = ({ ref, input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
+const customField = ({ value, input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
 
   return (
     <>
@@ -50,8 +50,8 @@ const customField = ({ ref, input, type, placeholder, id, className, meta: { tou
         margin="normal"
         id={id}
         type={type}
-
         {...input}
+        value={value}
       />
 
       {touched && error && <p style={{color: 'red'}}>{error}</p>}
@@ -60,7 +60,7 @@ const customField = ({ ref, input, type, placeholder, id, className, meta: { tou
 };
 export const Profile = (props) =>{
 
-
+  const [cartNumber, setCartNumber] = useState(0);
 
   const { classes, valid, onSends, profileDataSet, dataStatus } = props;
 
@@ -75,15 +75,14 @@ export const Profile = (props) =>{
   const handlerCart = (e)=>{
     const target = e.target;
     if (target.name === "cartNumber"){
-      let value = target.value;
-      value = value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ')
+      setCartNumber(target.value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 '));
     }
   };
 
   if (dataStatus){
     return (<Redirect to='/map'/>);
   }
-
+  const upper = value => value && value.toUpperCase();
 
   return(
     <Paper className={cx(classes.root)}>
@@ -119,7 +118,7 @@ export const Profile = (props) =>{
               id='cartNumber'
               name='cartNumber'
               className={cx('formField', classes.textField)}
-
+              //normalize={upper}
             />
             <Field
               component={customField}

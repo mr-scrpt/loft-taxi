@@ -59,7 +59,7 @@ const ModalAddress = ( props )=>{
   };
 
   const { classes, addressList, getOnMyWay, cancelPathRequest } = props;
-  console.log(getOnMyWay);
+
   let content = null;
   if(getOnMyWay === true){
     content = (
