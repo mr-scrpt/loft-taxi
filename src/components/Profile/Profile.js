@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 import st from "./Profile.module.css";
@@ -33,10 +33,8 @@ const styles = theme => ({
   }
   ,textField:{
      width: '100%'
-
   }
 });
-
 
 
 const customField = ({ input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
@@ -51,27 +49,32 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
         type={type}
         {...input}
       />
-      {error}
+
       {touched && error && <p style={{color: 'red'}}>{error}</p>}
     </>
   );
 };
 export const Profile = (props) =>{
-  const { classes, valid, onSends } = props;
 
+  useEffect(()=>{
+    
+  }, []);
+
+  const { classes, valid, onSends } = props;
+  console.log(valid);
   return(
     <Paper className={cx(classes.root)}>
       <Typography className={classes.paragraph} component="p">
         Профиль
       </Typography>
-      <form className={cx('form', st.profile__form)}>
+      <form className={cx('form', st.profile__form)} >
         <div className={cx(stForm.form__inner)}>
           <div className={cx(stForm.form__col)}>
             <Field
               component={customField}
               placeholder='Имя владельца *'
               type='text'
-              id='fullName'
+              id='full-Name'
               name='fullName'
               className={cx('formField', classes.textField)}
             />

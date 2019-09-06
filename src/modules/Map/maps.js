@@ -6,8 +6,7 @@ import {
   fetchAddressRequest,
   fetchCoordsSuccess,
   fetchCoordsRequest,
-  cancelPathRequest,
-  cancelPathSuccess
+  cancelPathRequest
 } from './actions';
 import {createSelector} from 'reselect';
 import {combineReducers} from "redux";

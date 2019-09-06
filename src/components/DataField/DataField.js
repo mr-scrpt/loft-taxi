@@ -66,6 +66,7 @@ const DataField = ({classes, name, input, type, placeholder, id, className, meta
           }}
         />
       </Grid>
+      {touched && error && <p style={{color: 'red'}}>{error}</p>}
     </MuiPickersUtilsProvider>
   );
 };

@@ -69,7 +69,7 @@ const customField = ({ input, type, placeholder, id, className, meta: { touched,
         type={type}
         {...input}
       />
-      {error}
+
       {touched && error && <p style={{color: 'red'}}>{error}</p>}
     </>
   );
@@ -134,5 +134,3 @@ export default compose(
   withStyles(styles),
   reduxForm({form: 'Login', validate: myValidator})
 )(Login);
-
-//export default withStyles(styles)(reduxForm({Form: 'Login'})(Login));
