@@ -8,24 +8,25 @@ import Button from "@material-ui/core/Button";
 import {compose} from "recompose";
 import {withStyles} from "@material-ui/core";
 import SelectField from '../SelectField';
-import TextField from "@material-ui/core/TextField";
+import {BrowserRouter, Redirect} from 'react-router-dom';
+
 
 import {
   cancelPathRequest,
   fetchAddressRequest,
   fetchCoordsRequest,
   getAddressList,
-  getOnMyWay,
-  cancelcancelPathRequest
+  getOnMyWay
 } from '../../modules/Map';
 import {connect} from "react-redux";
+import {getProfileData} from "../../modules/Profile";
 
 
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing() * 2,
+    paddingBottom: theme.spacing() * 2,
     width: 250,
     display: 'flex',
     flexDirection: 'column',
@@ -44,7 +45,15 @@ const styles = theme => ({
 
 
 const ModalAddress = ( props )=>{
-  const { fetchAddressRequest, fetchCoordsRequest } = props;
+  const {
+    fetchAddressRequest,
+    fetchCoordsRequest,
+    profileReady,
+    classes,
+    addressList,
+    getOnMyWay,
+    cancelPathRequest
+  } = props;
 
   useEffect(()=>{
     fetchAddressRequest();
@@ -58,9 +67,13 @@ const ModalAddress = ( props )=>{
 
   };
 
-  const { classes, addressList, getOnMyWay, cancelPathRequest } = props;
-
   let content = null;
+  if (!profileReady){
+    return(
+      <Redirect  to='/profile' exact />
+      )
+
+  }
   if(getOnMyWay === true){
     content = (
       <>
@@ -115,7 +128,7 @@ const ModalAddress = ( props )=>{
 
 export default compose(
   connect(
-    state=> ({ addressList: getAddressList(state), getOnMyWay: getOnMyWay(state) }),
+    state=> ({ addressList: getAddressList(state), getOnMyWay: getOnMyWay(state), profileReady: getProfileData(state) }),
     {fetchAddressRequest, fetchCoordsRequest, cancelPathRequest}
   ),
   withStyles(styles),

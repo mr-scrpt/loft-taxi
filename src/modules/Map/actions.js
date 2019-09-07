@@ -20,7 +20,3 @@ export const cancelPathRequest = createAction(
   'TAXI/CANCEL_PATH_REQUEST'
 );
 
-/*
-export const cancelPathSuccess = createAction(
-  'TAXI/CANCEL_PATH_SUCCESS'
-);*/

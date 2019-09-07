@@ -32,15 +32,11 @@ class App extends PureComponent {
             exact/>
           <PrivateRoute path="/map" component={PageMap} pathTo='/login' exact/>
           <PrivateRoute path="/profile" component={PageProfile} pathTo='/login' exact/>
-          {/*Не работает редирект с левых роутов - перенаправляет на логин*/}
           <Route path='*' component={
             ()=><Redirect from='/' to={isAuthorized ? '/map' : '/login'} exact />
           } exact/>
         </Switch>
-          {/*<Redirect from='*' to='/'/>*/}
 
-        {/*{!isAuthorized && <Redirect to="/map"/>}
-        {isAuthorized ? <PageMap /> : <PageLogin onSends={this.logged}/>}*/}
       </BrowserRouter>
     )
   }

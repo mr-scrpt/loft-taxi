@@ -49,8 +49,6 @@ const NavTop = (props)=> {
           <LoginButton isAuthorized={isAuthorized} isLogged={fetchLoggedOut}/>
         </Button>
 
-       {/*<LoginButton myClass={cx(st.navTop__link)}/>*/}
-
       </ButtonGroup>
 
     </div>

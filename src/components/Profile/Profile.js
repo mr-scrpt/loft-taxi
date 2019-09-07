@@ -16,11 +16,12 @@ import {profileDataSet, getProfileData} from '../../modules/Profile';
 import {Redirect} from 'react-router-dom';
 import Cleave from 'cleave.js/react';
 
+
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing() * 2,
+    paddingBottom: theme.spacing() * 2,
     width: 800,
     display: 'flex',
     flexDirection: 'column',
@@ -40,7 +41,7 @@ const styles = theme => ({
 
 const customField = ({ input, type,placeholder, formatter, id, className, meta: { touched, error },...rest}) => {
   const { value } = input;
-  console.log(value);
+
   let myValue;
   if( formatter){
     myValue = formatter(value)
@@ -51,7 +52,6 @@ const customField = ({ input, type,placeholder, formatter, id, className, meta: 
     <>
       <TextField
         label={placeholder}
-        defaultValue=""
         className={className}
         margin="normal"
         id={id}
@@ -89,10 +89,7 @@ return(
 
 export const Profile = (props) =>{
 
-  //const [cartNumber, setCartNumber] = useState(0);
-
   const { classes, valid, profileDataSet, dataStatus } = props;
-
 
   const checkSendForm = event => {
     event.preventDefault();
@@ -101,11 +98,9 @@ export const Profile = (props) =>{
     }
   };
 
-
   if (dataStatus){
     return (<Redirect to='/map'/>);
   }
-
 
   return(
     <Paper className={cx(classes.root)}>
