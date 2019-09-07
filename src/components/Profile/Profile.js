@@ -39,8 +39,14 @@ const styles = theme => ({
 });
 
 
-const customField = ({ value, input, type, placeholder, id, className, meta: { touched, error },...rest}) => {
-
+const customField = ({ input, type,placeholder, formatter, id, className, meta: { touched, error },...rest}) => {
+  const { value } = input;
+  let myValue;
+  if( formatter){
+    myValue = formatter(value)
+  }else {
+    myValue = value;
+  }
   return (
     <>
       <TextField
@@ -51,7 +57,7 @@ const customField = ({ value, input, type, placeholder, id, className, meta: { t
         id={id}
         type={type}
         {...input}
-        value={value}
+        value={myValue}
       />
 
       {touched && error && <p style={{color: 'red'}}>{error}</p>}
@@ -72,24 +78,23 @@ export const Profile = (props) =>{
     }
   };
 
-  const handlerCart = (e)=>{
-    const target = e.target;
-    if (target.name === "cartNumber"){
-      setCartNumber(target.value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 '));
-    }
-  };
 
   if (dataStatus){
     return (<Redirect to='/map'/>);
   }
-  const upper = value => value && value.toUpperCase();
+  const groupValue = (value)=>{
+    return value
+      .replace(/[^+\d]/g, '')
+      .replace(/\W/gi, '')
+      .replace(/(.{4})/g, '$1 ')
+  };
 
   return(
     <Paper className={cx(classes.root)}>
       <Typography className={classes.paragraph} component="p">
         Профиль
       </Typography>
-      <form className={cx('form', st.profile__form)} onSubmit={checkSendForm} onChange={handlerCart}>
+      <form className={cx('form', st.profile__form)} onSubmit={checkSendForm} >
         <div className={cx(stForm.form__inner)}>
           <div className={cx(stForm.form__col)}>
             <Field
@@ -118,7 +123,8 @@ export const Profile = (props) =>{
               id='cartNumber'
               name='cartNumber'
               className={cx('formField', classes.textField)}
-              //normalize={upper}
+              formatter={groupValue}
+
             />
             <Field
               component={customField}

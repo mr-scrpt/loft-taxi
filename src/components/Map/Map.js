@@ -73,13 +73,15 @@ class Map extends PureComponent {
             "line-width": 8
           }
         });
+
+
+      map.flyTo({
+        center:coordsWay[0],
+        zoom: 12
+      });
     }
 
-   /* if (getOnMyWay === false){
-      map.removeLayer(map.painter.id);
-      //map.removeSource("route");
-      console.log(map);
-    }*/
+
 
   }
 
