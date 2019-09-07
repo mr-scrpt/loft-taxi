@@ -14,8 +14,7 @@ import DataField from "../DataField";
 import {validator} from './validator';
 import {profileDataSet, getProfileData} from '../../modules/Profile';
 import {Redirect} from 'react-router-dom';
-
-
+import Cleave from 'cleave.js/react';
 
 const styles = theme => ({
   root: {
@@ -41,6 +40,7 @@ const styles = theme => ({
 
 const customField = ({ input, type,placeholder, formatter, id, className, meta: { touched, error },...rest}) => {
   const { value } = input;
+  console.log(value);
   let myValue;
   if( formatter){
     myValue = formatter(value)
@@ -64,11 +64,34 @@ const customField = ({ input, type,placeholder, formatter, id, className, meta: 
     </>
   );
 };
+
+function MaskedTextField(props) {
+  const { options, inputRef, ...other } = props;
+  return <Cleave {...other} ref={inputRef} options={options} />;
+}
+
+const customFieldsCard = ({input: { name, onChange, value, ...restInput }, meta,options,...rest})=>{
+return(
+  <TextField
+    {...rest}
+    name={name}
+    onChange={onChange}
+    value={value}
+    error={meta.error && meta.touched}
+    helperText={meta && meta.touched ? meta.error : undefined}
+    inputProps={{ ...restInput, options, value }}
+    InputProps={{
+      inputComponent: MaskedTextField
+    }}
+  />
+)};
+
+
 export const Profile = (props) =>{
 
-  const [cartNumber, setCartNumber] = useState(0);
+  //const [cartNumber, setCartNumber] = useState(0);
 
-  const { classes, valid, onSends, profileDataSet, dataStatus } = props;
+  const { classes, valid, profileDataSet, dataStatus } = props;
 
 
   const checkSendForm = event => {
@@ -82,12 +105,7 @@ export const Profile = (props) =>{
   if (dataStatus){
     return (<Redirect to='/map'/>);
   }
-  const groupValue = (value)=>{
-    return value
-      .replace(/[^+\d]/g, '')
-      .replace(/\W/gi, '')
-      .replace(/(.{4})/g, '$1 ')
-  };
+
 
   return(
     <Paper className={cx(classes.root)}>
@@ -117,14 +135,13 @@ export const Profile = (props) =>{
           </div>
           <div className={cx(stForm.form__col)}>
             <Field
-              component={customField}
+              component={customFieldsCard}
               placeholder='Номер карты *'
               type='text'
               id='cartNumber'
               name='cartNumber'
               className={cx('formField', classes.textField)}
-              formatter={groupValue}
-
+              options={{creditCard: true}}
             />
             <Field
               component={customField}
