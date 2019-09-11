@@ -18,7 +18,8 @@ const styles = {
 
 class Map extends PureComponent {
   state = {
-
+    map: null,
+    loaded: false
   };
   mapRef = React.createRef();
 
@@ -32,24 +33,35 @@ class Map extends PureComponent {
       zoom: 9 // starting zoom
     });
 
-    this.setState({map});
+
+    if (map){
+      map.on('load', ()=>{
+        this.setState({loaded: true});
+        this.setState({map});
+      });
+    }
+
+
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const {coordsWay, getOnMyWay} = this.props;
-    const {map} = this.state;
-    // Удаление
-    if (getOnMyWay === false) {
-      if (map.getLayer("route")) {
-        map.removeLayer("route");
+    if(this.state.loaded && this.state.map){
+      const {coordsWay, getOnMyWay} = this.props;
+      const {map} = this.state;
+      // Удаление
+      if (getOnMyWay === false) {
+        if (map.getLayer("route")) {
+          map.removeLayer("route");
+        }
+
+        if (map.getSource("route")) {
+          map.removeSource("route");
+        }
       }
 
-      if (map.getSource("route")) {
-        map.removeSource("route");
-      }
-    }
+      if (this.props.coordsWay.length && (getOnMyWay === 'loaded' || getOnMyWay)) {
 
-    if (this.props.coordsWay.length && (getOnMyWay === 'loaded' || getOnMyWay)) {
         map.addLayer({
           "id": "route",
           "type": "line",
@@ -75,19 +87,20 @@ class Map extends PureComponent {
         });
 
 
-      map.flyTo({
-        center:coordsWay[0],
-        zoom: 12
-      });
+        map.flyTo({
+          center:coordsWay[0],
+          zoom: 12
+        });
+
+
+      }
+
     }
-
-
 
   }
 
 
   render() {
-    const {classes} = this.props;
 
     return (
       <>
